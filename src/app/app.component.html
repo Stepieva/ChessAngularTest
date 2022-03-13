@@ -1,2 +1,22 @@
 <h1>{{title}}</h1>
-<ngx-chess-board #board></ngx-chess-board>
+<div class="row">
+    <div class="col-6">
+        <ngx-chess-board #board></ngx-chess-board> 
+    </div>
+    <div class="col-6">
+        <button class= "btn btn-warning" (click)="reset()">reset</button> 
+        <input type="file" class="file-input"
+        (change)="onFileSelected($event)" #fileUpload>
+
+        <div class="file-upload">
+
+        {{fileName || "No file uploaded yet."}}
+
+            <button class="btn btn-primary upload-btn"
+            (click)="fileUpload.click()">
+                <fa-icon [icon]="faFileUpload"></fa-icon>
+            </button>
+        </div>
+    </div>
+
+</div>
