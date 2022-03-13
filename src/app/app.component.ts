@@ -11,6 +11,7 @@ import { faFileUpload } from '@fortawesome/free-solid-svg-icons';
 
 
 export class AppComponent {
+  fileContent: string | ArrayBuffer | null = null;
   constructor(private ngxChessBoardService: NgxChessBoardService) { }
   title = 'ChessTest';
   fileName = '';
@@ -33,15 +34,29 @@ export class AppComponent {
 
         this.fileName = file.name;
 
-        const formData = new FormData();
+        //const formData = new FormData();
 
-        formData.append("thumbnail", file);
+        let fileReader = new FileReader();  
+
+        let self = this;
+        fileReader.onloadend = function(x) {
+          self.fileContent = fileReader.result;
+        }
+
+        fileReader.readAsText(file);
+
+        //formData.append("thumbnail", file);
 
         //const upload$ = this.http.post("/api/thumbnail-upload", formData);
 
         //upload$.subscribe();
     }
-}
+  }
+
+  imporPGN(){
+    
+    this.board.setPGN((this.fileContent || '').toString());
+  }
 
    
 }
